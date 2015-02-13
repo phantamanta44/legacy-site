@@ -1,8 +1,9 @@
 <html>
 	<head>
-		<link rel="shortcut icon" href="/img/favicon.ico">
+		<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
+		<title>Phanta Code</title>
 	</head>
 	<body>
-		<img src="img/banner.png"/>
+		<img src="images/banner.png"/>
 	</body>
 </html>
