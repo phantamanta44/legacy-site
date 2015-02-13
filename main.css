@@ -83,6 +83,13 @@ p {
 
 }
 
+.copyright {
+    font-size: 8;
+    padding-top: 16;
+    padding-bottom: 16;
+    color: rgb(170,170,170);
+}
+
 .banner {
     background-image: url("images/banner.png");
     background-position: center;
