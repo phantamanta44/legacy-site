@@ -6,7 +6,7 @@ body {
     background-position: 50% 0;
     color: rgb(240,240,240);
     text-align: center;
-    font-family: "Proxima Nova";
+    font-family: "Ek Mukta";
 }
 
 h1 {
@@ -39,7 +39,7 @@ p {
 }
 
 .navbar_entry_s {
-
+    background: #469;
 }
 
 .navbar_link {
