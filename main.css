@@ -42,17 +42,33 @@ p {
     margin-right: 24px;
 }
 
-.navbar_entry_s {
-    background: #469;
-}
-
-.navbar_link {
+.navbar_entry a, .navbar_entry_s a {
     display: inline-block;
     width: 126px;
     height: 20px;
     text-decoration: none;
+    color: #eef;
     font-weight: bold;
+    transition: background-color 0.5s, color 0.5s;
+    -webkit-transition: background-color 0.5s, color 0.5s;
     margin-top: 1px;
+}
+
+.navbar_entry_s a{
+    background-color: #469;
+}
+
+.navbar_entry a:link, .navbar_entry_s a:link {
+    color: #ccd;
+}
+
+.navbar_entry a:visited, .navbar_entry_s a:visited {
+    color: #ccd;
+}
+
+.navbar_entry a:hover, .navbar_entry_s a:hover {
+    color: #eef;
+    background-color: #59b;
 }
 
 .divider {
@@ -132,7 +148,6 @@ p {
     display: "inline-block";
     height: 72px;
     width: 100%;
-    background: #444;
     margin-left: 0;
     margin-right: 0;
     margin-top: 8px;
@@ -145,6 +160,9 @@ p {
     height: 72px;
     text-decoration: none;
     font-size: 57px;
+    transition: background-color 0.5s;
+    -webkit-transition: background-color 0.5s;
+    background-color: #444;
 }
 
 .widelist li a:link {
@@ -205,17 +223,4 @@ a:visited {
 
 a:hover {
     color: #0090FF;
-}
-
-a.navbar_link:link {
-    color: #ccd;
-}
-
-a.navbar_link:visited {
-    color: #ccd;
-}
-
-a.navbar_link:hover {
-    color: #eef;
-    background-color: #59b;
 }
