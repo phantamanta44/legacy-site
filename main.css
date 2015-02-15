@@ -145,13 +145,14 @@ p {
 }
 
 .widelist li {
-    display: "inline-block";
+    display: inline-block;
     height: 72px;
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     margin-top: 8px;
     margin-bottom: 8px;
+    background-color: #444;
 }
 
 .widelist li a {
@@ -160,9 +161,9 @@ p {
     height: 72px;
     text-decoration: none;
     font-size: 57px;
-    transition: background-color 0.5s;
-    -webkit-transition: background-color 0.5s;
-    background-color: #444;
+    background-size: 100% 0;
+    transition: background-size 0.5s, color 0.5s;
+    -webkit-transition: background-size 0.5s, color 0.5s;
 }
 
 .widelist li a:link {
@@ -171,7 +172,10 @@ p {
 
 .widelist li a:hover {
     color: #fff;
-    background-color: #59b;
+    background: url("images/widelist_bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 72px;
 }
 
 .widelist li a:visited {
