@@ -85,6 +85,7 @@ p {
 
 .header {
     height: 48px;
+    margin-top: 6px;
 }
 
 .footer {
