@@ -30,47 +30,51 @@ p {
 .navbar {
     list-style-type: none;
     margin: 0;
-    padding-top: 10;
     font-family: "Ubuntu";
     overflow: hidden;
+    background-color: #444;
+    font-size: 0;
 }
 
-.navbar_entry, .navbar_entry_s {
+.navbar li {
+    font-size: 24px;
     display: inline-block;
-    height: 22px;
-    width: 128px;
+    height: 36px;
+    width: 276px;
+    line-height: 36px;
     background: #444;
-    margin-left: 24px;
-    margin-right: 24px;
+    transition: background-color 0.5s;
+    -webkit-transition: background-color 0.5s;
 }
 
-.navbar_entry a, .navbar_entry_s a {
+.navbar li a {
     display: inline-block;
-    width: 126px;
-    height: 20px;
+    width: 276px;
+    height: 36px;
     text-decoration: none;
-    color: #eef;
     font-weight: bold;
-    transition: background-color 0.5s, color 0.5s;
-    -webkit-transition: background-color 0.5s, color 0.5s;
-    margin-top: 1px;
+    transition: color 0.5s;
+    -webkit-transition: color 0.5s;
 }
 
-.navbar_entry_s a{
-    background-color: #469;
+.navbar_entry_s {
+    background-color: #469 !important;
 }
 
-.navbar_entry a:link, .navbar_entry_s a:link {
-    color: #ccd;
+.navbar_entry_s a, .navbar li a:hover {
+    color: #eef !important;
 }
 
-.navbar_entry a:visited, .navbar_entry_s a:visited {
-    color: #ccd;
+.navbar li a:link {
+    color: #dde;
 }
 
-.navbar_entry a:hover, .navbar_entry_s a:hover {
-    color: #eef;
-    background-color: #59b;
+.navbar li a:visited {
+    color: #dde;
+}
+
+.navbar li:hover {
+    background-color: #59b !important;
 }
 
 .divider {
@@ -102,7 +106,7 @@ p {
 }
 
 .header {
-    height: 48px;
+    height: 36px;
     margin-top: 6px;
 }
 
