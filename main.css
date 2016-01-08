@@ -3,7 +3,7 @@
 body {
     background-color: #FAFAFA;
     color: #212121;
-    font-family: "Roboto" sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -36,12 +36,16 @@ a:hover {
     min-height: 100vh;
 }
 
+#wrapper div {
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+}
+
 /* ### HEADER ############## */
 
 #header {
     position: relative;
-    margin: 0;
-    width: 100%;
     height: 56px;
     background-color: #424242;
     box-shadow: 0 2px 4px 2px #BDBDBD;
@@ -58,8 +62,6 @@ a:hover {
     position: absolute;
     top: 56px;
     bottom: 56px;
-    margin: 0;
-    width: 100%;
     padding: 26px 14%;
     box-shadow: 0 2px 4px 1px #E0E0E0;
     z-index: 4;
@@ -70,9 +72,7 @@ a:hover {
 #footer {
     position: absolute;
     bottom: 0;
-    margin: 0;
     padding: 0 14%;
-    width: 100%;
     height: 56px;
     background-color: #EEE;
 }
