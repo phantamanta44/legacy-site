@@ -1,34 +1,142 @@
 <html>
-	<head>
-    	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
-		<link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="main.css">
-		<meta name="google-site-verification" content="LMXAelTHdxlCtieqHsQ0BIuSauOIgmg-lPYM__4oqM4" />
-		<title>Phanta Memes</title>
-	</head>
-	<body>
-	    <div class="wrapper">
-	        <div class="header">
-	            <div class="headerContent">
-	                <div class="helper-vertical"></div>
-	                <a href="">
-    	                <div class="banner">
-    	                    <img class="logo" src="images/logo.png">
-    	                    <span>Phanta Memes</span>
-    	                </div>
-	                </a>
-	            </div>
-	        </div>
-	        <div class="content">
-	            <h1>hi there.</h1>
-	            <p>there's nothing here.</p>
-            	<p>perhaps try looking <a href="http://nom.codes">elsewhere</a>?</p>
-	        </div>
-	        <div class="footer">
-        		<div class="copyright">&copy; Evan Geng, 2016</div>
-	        </div>
-	    </div>
+    <head>
+        <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="static/img/favicon.ico" type="image/x-icon"/>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat|Allura" rel="stylesheet">
+        <link href="http://cdn.materialdesignicons.com/1.7.22/css/materialdesignicons.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="static/css/main.css">
+        <meta name="google-site-verification" content="LMXAelTHdxlCtieqHsQ0BIuSauOIgmg-lPYM__4oqM4" />
+        <title>Phanta Codebase</title>
+    </head>
+    <body>
+        <script src="static/js/jquery.min.js"></script>
+        <script src="static/js/main.js"></script>
+        <div id="wrapper">
+            <div id="bg-container" class="fill-parent"></div>
+            <div id="page-content">
+                <div id="link-bar">
+                    <a target="__BLANK" href="http://github.com/phantamanta44/phantamanta44.github.io">
+                        <i class="mdi mdi-github-circle button-icon"></i>
+                    </a>
+                    <a target="__BLANK" href="http://twitter.com/phantamanta44">
+                        <i class="mdi mdi-twitter button-icon"></i>
+                    </a>
+                    <a target="__BLANK" href="http://brawl.com/members/8975">
+                        <i class="mdi mdi-cube button-icon"></i>
+                    </a>
+                    <a target="__BLANK" href="http://shamanguli.deviantart.com/art/Voyage-Voyage-547215708">
+                        <i class="mdi mdi-image-multiple button-icon"></i>
+                    </a>
+                </div>
+                <div id="center-box" class="abs-center">
+                    <div id="title">
+                        <h1>Phanta.</h1>
+                    </div>
+                    <div id="nav">
+                        <div id="nav-content">
+                            <div id="action-proj">
+                                <p>Projects</p>
+                            </div>
+                            <span>|</span>
+                            <div id="action-org">
+                                <p>Organizations</p>
+                            </div>
+                            <span>|</span>
+                            <div id="action-con">
+                                <p>Contact</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mb-screen" class="fill-parent"></div>
+                <div id="mb-repo" class="mb abs-center">
+                    <div class="mb-titlebar">
+                        <h2>Projects</h2>
+                        <div class="action-x">
+                            <i class="mdi mdi-close button-icon"></i>
+                        </div>
+                    </div>
+                    <div class="mb-content">
+                        <div id="repo-searchbox" class="input-text" data-name="Search"></div>
+                        <div id="repo-list" class="scroll"></div>
+                    </div>
+                </div>
+                <div id="mb-org" class="mb abs-center">
+                    <div class="mb-titlebar">
+                        <h2>Organizations</h2>
+                        <div class="action-x">
+                            <i class="mdi mdi-close button-icon"></i>
+                        </div>
+                    </div>
+                    <div class="mb-content">
+                        <div id="org-list"></div>
+                    </div>
+                </div>
+                <div id="mb-con" class="mb abs-center">
+                    <div class="mb-titlebar">
+                        <h2>Contact Me</h2>
+                        <div class="action-x">
+                            <i class="mdi mdi-close button-icon"></i>
+                        </div>
+                    </div>
+                    <div class="mb-content">
+                        <div id="con-list">
+                            <div class="con">
+                                <div class="con-img">
+                                    <img src="static/img/twitter.jpg"/>
+                                </div>
+                                <div class="con-details">
+                                    <div class="con-name">
+                                        <h2>Twitter</h2>
+                                    </div>
+                                    <div class="con-link">
+                                        <a target="__BLANK" href="https://twitter.com/phantamanta44">
+                                            <p>@phantamanta44</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="con">
+                                <div class="con-img">
+                                    <img src="static/img/github.png"/>
+                                </div>
+                                <div class="con-details">
+                                    <div class="con-name">
+                                        <h2>GitHub</h2>
+                                    </div>
+                                    <div class="con-link">
+                                        <a target="__BLANK" href="https://github.com/phantamanta44">
+                                            <p>phantamanta44</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="con">
+                                <div class="con-img">
+                                    <img src="static/img/lol.jpg"/>
+                                </div>
+                                <div class="con-details">
+                                    <div class="con-name">
+                                        <h2>League of Legends</h2>
+                                    </div>
+                                    <div class="con-link">
+                                        <a target="__BLANK" href="http://na.op.gg/summoner/?userName=LambdaSec">
+                                            <p>LambdaSec</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="loader">
+            <div id="load-block-top"></div>
+            <svg id="load-spinner" class="spinner abs-center" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+            </svg>
+            <div id="load-block-bottom"></div>
+        </div>
     </body>
 </html>
