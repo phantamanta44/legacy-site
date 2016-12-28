@@ -91,14 +91,21 @@ $(document).ready(function() {
         var s = getInput(repoSearch);
         if (!s) {
             repoList.children().removeClass("hidden");
+            searchLabel.text("Search");
+            repoSearch.removeClass("invalid");
         } else {
-            var p = new RegExp(s, "i");
+            var p;
+            try {
+                p = new RegExp(s, "i");
+            } catch (e) {
+                searchLabel.text("Search (Invalid Regex!)");
+                repoSearch.addClass("invalid");
+                return;
+            }
+            searchLabel.text("Search");
+            repoSearch.removeClass("invalid");
             repoList.children().each(function (i, e) {
                 var o = $(e);
-                console.log(s);
-                console.log(o.attr("data-name"));
-                console.log(o.attr("data-desc"));
-                console.log("=====");
                 if ((!!o.attr("data-name") && p.test(o.attr("data-name"))) ||
                     (!!o.attr("data-desc") && p.test(o.attr("data-desc")))) {
                     o.removeClass("hidden");
@@ -151,6 +158,7 @@ $(document).ready(function() {
     var orgBox = $("#mb-org");
     var conBox = $("#mb-con");
     var repoSearch = $("#repo-searchbox");
+    var searchLabel;
 
     var showBoxFunc = function(box) {
         return function() {
@@ -165,6 +173,7 @@ $(document).ready(function() {
     };
 
     var initActionButtons = function() {
+        searchLabel = repoSearch.children("label");
         boxScreen.click(hideBox);
         $(".action-x").click(hideBox);
         $(window).keydown(function(e) {

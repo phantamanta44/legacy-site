@@ -150,6 +150,10 @@ p {
     pointer-events: none;
 }
 
+.input-text.invalid > label {
+    color: rgba(255, 0, 0, 0.6);
+}
+
 .input-text > input[type="text"]:focus + label,
 .input-text > input[type="text"]:valid + label {
     top: -20px;
