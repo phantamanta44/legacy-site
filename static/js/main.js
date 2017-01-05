@@ -130,6 +130,31 @@ $(document).ready(function() {
             $("#page-content").addClass("visible");
             window.setTimeout(onLoaderHidden, 1600);
         }, 2100);
+        if (!!document.location.hash) {
+            switch (document.location.hash.substring(1).toLowerCase()) {
+                case "repos":
+                case "repo":
+                case "repositories":
+                case "repository":
+                case "projs":
+                case "proj":
+                case "projects":
+                case "project":
+                    repoBox.showBox();
+                    break;
+                case "orgs":
+                case "org":
+                case "organizations":
+                case "organization":
+                    orgBox.showBox();
+                    break;
+                case "con":
+                case "contact":
+                case "contactme":
+                    conBox.showBox();
+                    break;
+            }
+        }
     };
 
     var boxScreen = $("#mb-screen");
@@ -180,9 +205,9 @@ $(document).ready(function() {
             if (e.keyCode === 27)
                 hideBox();
         });
-        $("#action-proj").click(showBoxFunc(repoBox));
-        $("#action-org").click(showBoxFunc(orgBox));
-        $("#action-con").click(showBoxFunc(conBox));
+        $("#action-proj").click(repoBox.showBox = showBoxFunc(repoBox));
+        $("#action-org").click(orgBox.showBox = showBoxFunc(orgBox));
+        $("#action-con").click(conBox.showBox = showBoxFunc(conBox));
         repoSearch.on("input", repoSearchUpdate);
     };
 
