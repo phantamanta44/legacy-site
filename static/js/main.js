@@ -22,7 +22,7 @@ $(document).ready(function() {
             $("<div>", {"class": "repo"}).append(
                 $("<div>", {"class": "repo-title"}).append(
                     $("<div>", {"class": "repo-name"}).append(
-                        $("<a>", {target: "__BLANK", href: repo.html_url}).append(
+                        $("<a>", {target: "__BLANK", href: repo.homepage || repo.html_url}).append(
                             $("<h2>").text(repo.name)
                         )
                     )
