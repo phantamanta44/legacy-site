@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>hoal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #meme {
+            width: 100vw; height: 100vh;
+            position: absolute;
+            top: 0; left: 0;
+            background-image: url('http://i.imgur.com/Or0QDr5.png');
+            background-position: center;
+            transition: filter 6s;
+        }
+        #meme.meme {
+            filter: invert(100%);
+        }
+        #cloak {
+            width: 100vw; height: 100vh;
+            position: absolute;
+            top: 0; left: 0;
+            background-color: #000000;
+            transition: opacity 2s;
+        }
+        #cloak.gone {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var m = $("#meme");
+            var c = $("#cloak");
+            var flush = new Howl({
+                src: ["flush.mp3"]
+            });
+            var init = false;
+            $(document).on("click", function() {
+                if (!init) {
+                    init = true;
+                    c.addClass("gone");
+                } else {
+                    flush.play();
+                    m.addClass("meme");
+                }
+            });
+        });
+    </script>
+    <div id="meme"></div>
+    <div id="cloak"></div>
+</body>
+</html>
