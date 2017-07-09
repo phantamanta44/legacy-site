@@ -35,7 +35,7 @@ $(document).ready(function() {
                 )
             ).append(
                 $("<p>", {"class": "repo-desc"}).text(repo.description || "No description...")
-            ).attr("data-name", repo.name).attr("data-desc", repo.description)
+            ).attr("data-name", repo.name).attr("data-desc", repo.description).attr("data-tags", repo.topics.join(" "))
         );
     };
 
@@ -65,12 +65,18 @@ $(document).ready(function() {
 
     var getRepos = function(pageNum, cb, prev) {
         var repos = prev || [];
-        $.getJSON(repoUrl + pageNum, function(dto) {
+        $.ajax({
+          url: repoUrl + pageNum,
+          beforeSend: function(req) {
+            req.setRequestHeader("Accept", "application/vnd.github.mercy-preview+json");
+          },
+          success: function(dto) {
             repos = repos.concat(dto);
             if (dto.length < 100)
                 cb(repos);
             else
                 getRepos(pageNum + 1, cb, repos);
+          }
         });
     };
 
@@ -107,7 +113,8 @@ $(document).ready(function() {
             repoList.children().each(function (i, e) {
                 var o = $(e);
                 if ((!!o.attr("data-name") && p.test(o.attr("data-name"))) ||
-                    (!!o.attr("data-desc") && p.test(o.attr("data-desc")))) {
+                    (!!o.attr("data-desc") && p.test(o.attr("data-desc"))) ||
+                    (!!o.attr("data-tags") && p.test(o.attr("data-tags")))) {
                     o.removeClass("hidden");
                 } else {
                     o.addClass("hidden");
