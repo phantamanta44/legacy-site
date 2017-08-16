@@ -1,226 +1,139 @@
 "use strict";
-$(document).ready(function() {
+$(() => {
 
-    var getInput = function(ipt) {
-        return ipt.children("input").val();
-    };
+  $(".input-text").each(function(i, obj) {
+    obj = $(obj);
+    obj.append($("<input>", {type: "text", required: "", spellcheck: "false"}));
+    obj.append($("<label>").text(obj.attr("data-name")));
+    obj.append($("<span>"));
+  });
 
-    var initInputBoxes = function() {
-        $(".input-text").each(function(i, e) {
-            var o = $(e);
-            o.append($("<input>", {type: "text", required: "", spellcheck: "false"}));
-            o.append($("<label>").text(o.attr("data-name")));
-            o.append($("<span>"));
-        });
-    };
+  function getInput(ipt) {
+    return ipt.children("input").val();
+  }
 
-    var repoList = $("#repo-list");
-    var orgList = $("#org-list");
+  const sCont = $("#s-container");
 
-    var appendRepo = function(repo) {
-        repoList.append(
-            $("<div>", {"class": "repo"}).append(
-                $("<div>", {"class": "repo-title"}).append(
-                    $("<div>", {"class": "repo-name"}).append(
-                        $("<a>", {target: "__BLANK", href: repo.homepage || repo.html_url}).append(
-                            $("<h2>").text(repo.name)
-                        )
-                    )
-                ).append(
-                    $("<div>", {"class": "repo-stars"}).append(
-                        $("<i>", {"class": "mdi mdi-star"})
-                    ).append(
-                        $("<span>").text(repo.stargazers_count)
-                    )
-                )
-            ).append(
-                $("<p>", {"class": "repo-desc"}).text(repo.description || "No description...")
-            ).attr("data-name", repo.name).attr("data-desc", repo.description).attr("data-tags", repo.topics.join(" "))
-        );
-    };
+  $(".nav-button").click(e => {
+    let x = parseInt(e.currentTarget.getAttribute("data-x"), 10) * -100;
+    let y = parseInt(e.currentTarget.getAttribute("data-y"), 10) * -100;
+    sCont.css("left", `${x}%`);
+    sCont.css("top", `${y}%`);
+  });
 
-    var appendOrg = function(org) {
-        orgList.append(
-            $("<div>", {"class": "org"}).append(
-                $("<div>", {"class": "org-img"}).append(
-                    $("<img>", {src: org.avatar_url})
-                )
-            ).append(
-                $("<div>", {"class": "org-details"}).append(
-                    $("<div>", {"class": "org-name"}).append(
-                        $("<a>", {target: "__BLANK", href: "https://github.com/" + org.login}).append(
-                            $("<h2>").text(org.login)
-                        )
-                    )
-                ).append(
-                    $("<div>", {"class": "org-desc"}).append(
-                        $("<p>").text(org.description || "No description...")
-                    )
-                )
+  $(".nav-main").each((i, obj) => {
+    obj = $(obj);
+    obj.find(".ray-a").css("border-color", obj.attr("data-a"));
+    obj.find(".ray-b").css("border-color", obj.attr("data-b"));
+    obj.find(".conc-a").attr("stroke", obj.attr("data-a"));
+    obj.find(".conc-b").attr("stroke", obj.attr("data-b"));
+  });
+
+  const repoUrl = "http://api.github.com/users/phantamanta44/repos?sort=updated&per_page=100&page=";
+
+  function getRepos(pageNum, cb, prev) {
+    let repos = prev || [];
+    $.ajax({
+      url: repoUrl + pageNum,
+      beforeSend: req => req.setRequestHeader("Accept", "application/vnd.github.mercy-preview+json"),
+      success: dto => {
+        repos = repos.concat(dto);
+        if (dto.length < 100)
+          cb(repos);
+        else
+          getRepos(pageNum + 1, cb, repos);
+      }
+    });
+  }
+
+  const orgUrl = "https://api.github.com/users/phantamanta44/orgs";
+
+  function getOrgs(cb) {
+    $.getJSON(orgUrl, cb);
+  }
+
+  const repos = $("#repo-list");
+  const repoCache = new Map();
+  const repoSearch = $("#repo-search");
+  const repoSearchLabel = repoSearch.children("label");
+
+  getRepos(1, dto => {
+    $.each(dto, (i, repo) => {
+      let id = repo.id, rightElem;
+      repo.tags = repo.topics.join(" ");
+      repoCache.set(id.toString(), repo);
+      repos.append(
+        $("<div>", {"class": "repo-entry", "data-id": id}).append(
+          $("<div>", {"class": "repo-entry-left"}).append(
+            $("<h2>").text(repo.name.toUpperCase())
+          )
+        ).append(
+          $("<div>", {"class": "repo-entry-center"}).append(
+            $("<p>").text(repo.description)
+          )
+        ).append(
+          rightElem = $("<div>", {"class": "repo-entry-right"}).append(
+            $("<a>", {href: repo.html_url, target: "_blank"}).append(
+              $("<i>", {"class": "mdi mdi-github-circle"})
             )
-        );
-    };
-
-    var repoUrl = "http://api.github.com/users/phantamanta44/repos?sort=updated&per_page=100&page=";
-
-    var getRepos = function(pageNum, cb, prev) {
-        var repos = prev || [];
-        $.ajax({
-          url: repoUrl + pageNum,
-          beforeSend: function(req) {
-            req.setRequestHeader("Accept", "application/vnd.github.mercy-preview+json");
-          },
-          success: function(dto) {
-            repos = repos.concat(dto);
-            if (dto.length < 100)
-                cb(repos);
-            else
-                getRepos(pageNum + 1, cb, repos);
+          )
+        )
+      );
+      if (!!repo.homepage) {
+        rightElem.append(
+          $("<a>", {href: repo.homepage, target: "_blank"}).append(
+            $("<i>", {"class": "mdi mdi-link"})
+          )
+        )
+      }
+    });
+    repoSearch.on("input", () => {
+      let exp = getInput(repoSearch);
+      if (!exp) {
+        repos.children().removeClass("hidden");
+        repoSearchLabel.text("search.");
+        repoSearch.removeClass("invalid");
+      } else {
+        let pattern;
+        try {
+          pattern = new RegExp(exp, "i");
+        } catch (e) {
+          repoSearchLabel.text("invalid regex.");
+          repoSearch.addClass("invalid");
+          return;
+        }
+        repoSearchLabel.text("search.");
+        repoSearch.removeClass("invalid");
+        repos.children().each((i, obj) => {
+          let repo = repoCache.get(obj.getAttribute("data-id"));
+          if (pattern.test(repo.name)
+            || pattern.test(repo.description)
+            || pattern.test(repo.tags)) {
+            $(obj).removeClass("hidden");
+          } else {
+            $(obj).addClass("hidden");
           }
         });
-    };
+      }
+    });
+  });
 
-    var loadGithubData = function() {
-        getRepos(1, function(dto) {
-            $.each(dto, function(i, repo) {
-                appendRepo(repo);
-            });
-        });
-        $.getJSON("https://api.github.com/users/phantamanta44/orgs", function(dto) {
-            $.each(dto, function(i, org) {
-                appendOrg(org);
-            });
-        });
-    };
+  const orgs = $("#org-container");
 
-    var repoSearchUpdate = function() {
-        var s = getInput(repoSearch);
-        if (!s) {
-            repoList.children().removeClass("hidden");
-            searchLabel.text("Search");
-            repoSearch.removeClass("invalid");
-        } else {
-            var p;
-            try {
-                p = new RegExp(s, "i");
-            } catch (e) {
-                searchLabel.text("Search (Invalid Regex!)");
-                repoSearch.addClass("invalid");
-                return;
-            }
-            searchLabel.text("Search");
-            repoSearch.removeClass("invalid");
-            repoList.children().each(function (i, e) {
-                var o = $(e);
-                if ((!!o.attr("data-name") && p.test(o.attr("data-name"))) ||
-                    (!!o.attr("data-desc") && p.test(o.attr("data-desc"))) ||
-                    (!!o.attr("data-tags") && p.test(o.attr("data-tags")))) {
-                    o.removeClass("hidden");
-                } else {
-                    o.addClass("hidden");
-                }
-            });
-        }
-    };
-
-    var onLoaderHidden = function() {
-        $("#title").addClass("shift");
-        $("#nav").addClass("visible");
-    };
-
-    var hideLoader = function() {
-        var loader = $("#loader");
-        loader.addClass("done");
-        $("#wrapper").addClass("visible");
-        window.setTimeout(function() {
-            loader.css("display", "none");
-            $("#page-content").addClass("visible");
-            window.setTimeout(onLoaderHidden, 1600);
-        }, 2100);
-        if (!!document.location.hash) {
-            switch (document.location.hash.substring(1).toLowerCase()) {
-                case "repos":
-                case "repo":
-                case "repositories":
-                case "repository":
-                case "projs":
-                case "proj":
-                case "projects":
-                case "project":
-                    repoBox.showBox();
-                    break;
-                case "orgs":
-                case "org":
-                case "organizations":
-                case "organization":
-                    orgBox.showBox();
-                    break;
-                case "con":
-                case "contact":
-                case "contactme":
-                    conBox.showBox();
-                    break;
-            }
-        }
-    };
-
-    var boxScreen = $("#mb-screen");
-    var bsTaskId = null;
-
-    var showBoxScreen = function() {
-        if (bsTaskId !== null)
-            window.clearTimeout(bsTaskId);
-        boxScreen.css("display", "block");
-        bsTaskId = window.setTimeout(function() {
-            boxScreen.addClass("visible")
-        }, 1);
-    };
-
-    var hideBoxScreen = function() {
-        if (bsTaskId !== null)
-            window.clearTimeout(bsTaskId);
-        boxScreen.removeClass("visible");
-        bsTaskId = window.setTimeout(function() {
-            boxScreen.css("display", "none");
-        }, 400);
-    };
-
-    var allBoxes = $(".mb");
-    var repoBox = $("#mb-repo");
-    var orgBox = $("#mb-org");
-    var conBox = $("#mb-con");
-    var repoSearch = $("#repo-searchbox");
-    var searchLabel;
-
-    var showBoxFunc = function(box) {
-        return function() {
-            showBoxScreen();
-            box.addClass("visible");
-        };
-    };
-
-    var hideBox = function() {
-        hideBoxScreen();
-        allBoxes.removeClass("visible");
-    };
-
-    var initActionButtons = function() {
-        searchLabel = repoSearch.children("label");
-        boxScreen.click(hideBox);
-        $(".action-x").click(hideBox);
-        $(window).keydown(function(e) {
-            if (e.keyCode === 27)
-                hideBox();
-        });
-        $("#action-proj").click(repoBox.showBox = showBoxFunc(repoBox));
-        $("#action-org").click(orgBox.showBox = showBoxFunc(orgBox));
-        $("#action-con").click(conBox.showBox = showBoxFunc(conBox));
-        repoSearch.on("input", repoSearchUpdate);
-    };
-
-    initInputBoxes();
-    initActionButtons();
-    loadGithubData();
-    hideLoader();
+  getOrgs(dto => {
+    let deltaAngle = Math.PI * 2 / dto.length;
+    let angle = -Math.PI / 2;
+    $.each(dto, (i, org) => {
+      orgs.append($("<div>", {"class": "org-entry"}).append(
+        $("<a>", {href: `https://github.com/${org.login}`, target: "_blank"}).append(
+          $("<p>", {"class": "org-name"}).text(org.login)
+        )
+      ).append(
+        $("<div>", {"class": "org-icon"}).css("background-image", `url(${org.avatar_url})`)
+      ).css("top", `${50 + 30 * Math.sin(angle)}%`)
+        .css("left", `${50 + 30 * Math.cos(angle)}%`));
+      angle += deltaAngle;
+    });
+  });
 
 });
