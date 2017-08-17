@@ -73,7 +73,7 @@ $(() => {
           )
         ).append(
           rightElem = $("<div>", {"class": "repo-entry-right"}).append(
-            $("<a>", {href: repo.html_url, target: "_blank"}).append(
+            $("<a>", {href: repo.html_url, target: "_blank", rel: "noopener"}).append(
               $("<i>", {"class": "mdi mdi-github-circle"})
             )
           )
@@ -81,7 +81,7 @@ $(() => {
       );
       if (!!repo.homepage) {
         rightElem.append(
-          $("<a>", {href: repo.homepage, target: "_blank"}).append(
+          $("<a>", {href: repo.homepage, target: "_blank", rel: "noopener"}).append(
             $("<i>", {"class": "mdi mdi-link"})
           )
         )
@@ -125,7 +125,7 @@ $(() => {
     let angle = -Math.PI / 2;
     $.each(dto, (i, org) => {
       orgs.append($("<div>", {"class": "org-entry"}).append(
-        $("<a>", {href: `https://github.com/${org.login}`, target: "_blank"}).append(
+        $("<a>", {href: `https://github.com/${org.login}`, target: "_blank", rel: "noopener"}).append(
           $("<p>", {"class": "org-name"}).text(org.login)
         )
       ).append(
