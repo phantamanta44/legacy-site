@@ -126,7 +126,7 @@ $(() => {
     $.each(dto, (i, org) => {
       orgs.append($("<div>", {"class": "org-entry"}).append(
         $("<a>", {href: `https://github.com/${org.login}`, target: "_blank", rel: "noopener"}).append(
-          $("<p>", {"class": "org-name"}).text(org.login)
+          $("<p>", {"class": "org-name"}).text(org.name || org.login)
         )
       ).append(
         $("<div>", {"class": "org-icon"}).css("background-image", `url(${org.avatar_url})`)
